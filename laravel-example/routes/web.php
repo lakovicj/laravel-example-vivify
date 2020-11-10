@@ -16,3 +16,23 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/test', function() {
+    echo 'Test GET';
+});
+
+Route::post('/test', function() {
+    echo 'Test POST';
+});
+
+Route::patch('/test', function() {
+    echo 'Test PATCH';
+});
+
+Route::PUT('/test', function() {
+    echo 'Test PUT';
+});
+
+Route::DELETE('/test', function() {
+    echo 'Test DELETE';
+});
