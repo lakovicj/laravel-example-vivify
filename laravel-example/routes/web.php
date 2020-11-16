@@ -1,9 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ResourceExampleController;
-
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +16,8 @@ use App\Http\Controllers\ResourceExampleController;
 
 
 
-Route::get('/', [HomeController::class, 'index']);
 
+Route::resource('posts', PostController::class);
 
-Route::resource('resources', ResourceExampleController::class);
 
 
