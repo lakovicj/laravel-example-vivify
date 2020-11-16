@@ -17,8 +17,10 @@ use App\Http\Controllers\ResourceExampleController;
 */
 
 
+
 Route::get('/', [HomeController::class, 'index']);
 
 
 Route::resource('resources', ResourceExampleController::class);
+
 
