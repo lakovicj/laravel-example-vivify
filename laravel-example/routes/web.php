@@ -23,3 +23,4 @@ Route::get('/simple', function() {
     return view('simple', ['first_name' => 'Jovan']);
 });
 
+
