@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ResourceExampleController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +15,7 @@ use App\Http\Controllers\ResourceExampleController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 
 Route::get('/', [HomeController::class, 'index']);
 
