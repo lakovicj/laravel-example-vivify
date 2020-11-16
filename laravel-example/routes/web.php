@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ResourceExampleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +16,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
-Route::get('/simple', function() {
-    return view('simple', ['first_name' => 'Jovan']);
-});
+Route::get('/', [HomeController::class, 'index']);
+
+
+Route::resource('resources', ResourceExampleController::class);
 
 
