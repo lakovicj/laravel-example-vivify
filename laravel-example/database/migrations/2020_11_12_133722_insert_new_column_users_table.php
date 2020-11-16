@@ -26,7 +26,7 @@ class InsertNewColumnUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->drop('novo_polje');
+            $table->dropColumn('novo_polje');
         });
     }
 }
