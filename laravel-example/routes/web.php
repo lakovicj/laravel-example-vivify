@@ -47,3 +47,4 @@ Route::put('/test/{id}', function($id, Request $request) {
 Route::delete('/test/{id}', function($id) {
     return response("Deleting entity with id=$id", 200);
 })->name('remove');
+
