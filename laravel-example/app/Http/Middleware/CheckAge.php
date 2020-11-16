@@ -18,14 +18,21 @@ class CheckAge
     {
         $queryAge = $request->query('age');
 
-        if ($queryAge && $queryAge > 18) {
+        if ($queryAge && $queryAge >= 18) {
             return $next($request);
         }
 
+        /*
+        return (is_null($queryAge)) ? response("Woops, no 'age' param in query!", 403) :
+                                        response("Woops, 'age' param should be >=18!", 403);
+        */
+
+
         if (is_null($queryAge)) {
-            echo "<br><hr>Woops, no 'age' param in query!";
-        } elseif ($queryAge < 19) {
-            echo "<br><hr> Woops, 'age' param should be >18!";
+            return response("Woops, no 'age' param in query!", 403);
+        } else {
+            return response("Woops, 'age' param should be >=18!", 403);
         }
+
     }
 }
