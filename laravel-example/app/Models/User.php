@@ -22,7 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'company',
-        'country'
+        'country_id'
     ];
 
     /**
@@ -44,4 +44,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function country() {
+        return $this->belongsTo('Webpatser\Countries\Countries');
+    }
 }

@@ -21,7 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('last_name');
             $table->string('company');
-            $table->string('country');
+            $table->integer('country_id')->unsigned()->index();
+            $table->foreign('country_id')->references('id')->on('countries');
             $table->rememberToken();
             $table->timestamps();
         });

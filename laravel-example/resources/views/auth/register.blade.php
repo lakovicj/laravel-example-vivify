@@ -90,15 +90,15 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="country" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}</label>
+                            <label for="country_id" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}</label>
 
                             <div class="col-md-6">
-                                <select id="country" class="form-control @error('country') is-invalid @enderror" name="country" required autocomplete="country" autofocus>
+                                <select id="country_id" class="form-control @error('country_id') is-invalid @enderror" name="country_id" required autocomplete="country_id" autofocus>
                                     @foreach ($allCountries as $country_id => $country_name)
                                         <option value={{$country_id}}>{{$country_name}}</option>
                                     @endforeach
                                 </select>
-                                @error('country')
+                                @error('country_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
