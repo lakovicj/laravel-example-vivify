@@ -19,6 +19,5 @@ class DatabaseSeeder extends Seeder
             'name' => "Jovan",
             'password' => Hash::make("12121212"),
             'email' => "name@gmail.com"
-        ]);
     }
 }
