@@ -28,7 +28,6 @@ class PostController extends Controller
         //$this->authorizeResource(Post::class, 'post');
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -115,6 +114,5 @@ class PostController extends Controller
             return response("Deleting post [id=$post->id]", 200);
         }
         return response('You are not author of this post -> you cannot delete it', 403);
-
     }
 }
