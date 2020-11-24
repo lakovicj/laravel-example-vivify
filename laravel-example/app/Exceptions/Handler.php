@@ -12,7 +12,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        \Symfony\Component\Routing\Exception\RouteNotFoundException::class
     ];
 
     /**
@@ -32,6 +32,8 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        //
+        //$this->renderable(function(MyException $e, $request) {
+        //    return response(['foo' => 'bar'], 404);
+        //});
     }
 }
