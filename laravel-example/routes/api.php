@@ -35,6 +35,9 @@ Route::group([
 
 Route::group(['middleware' => 'auth:api'], function() {
     Route::get('closed', 'App\Http\Controllers\DataController@closed');
+    Route::resource('posts', 'App\Http\Controllers\PostController');
+    // 3. Authorizing Actions Using Policies VIA MIDDLEWARE
+    Route::get('posts', 'App\Http\Controllers\PostController@index')->middleware('can:viewAny, App\Models\Post');
 });
 
 Route::get('open', 'App\Http\Controllers\DataController@open');

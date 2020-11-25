@@ -2,12 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Post;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    // Different types of invoking policies
+    // 1. Via User Model
+    // 2. Via Controller Helpers
+    // 3. Via Middleware (routes/api.php)
+    // 4. Authorizing Resource Controllers
+
+
+    public function __construct()
+    {
+        // 4. Authorizing Actions Using Policies - Resource Conroller
+        // we can make use of authorizeResource and let default exception handler to
+        // handle unauthorized exception. This way, response contains HTML page
+        // with message provided in PostPolicy deny method.
+
+        // If we want to have custom response, we can skip authorizeResource
+        // and define behaviour in every method.
+
+        //$this->authorizeResource(Post::class, 'post');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +35,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $allPosts = Post::all();
-        return view('post')->with(['posts'=>$allPosts]);
+        return response('you are authorized to get index', 200);
     }
 
     /**
@@ -26,10 +45,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $allUsers = DB::table('users')->orderBy('email')->pluck('email', 'id');
-
-        return view('create')->with(['users' => $allUsers]);
-
+        return response('create post method - form for creating post', 200);
     }
 
     /**
@@ -40,69 +56,63 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $newPost = new Post;
-        $newPost->title = $request->title;
-        $newPost->content = $request->content;
-        $newPost->user_id = $request->user_id;
-        $newPost->save();
+        // 2. Authorizing Actions Using Policies VIA User Model
 
-        return $this->index();
+        $user = Auth::user();
+        if ($request->user()->can('create', Post::class)) {
+            return response("User[id=$user->id] creating new post", 200);
+        }
+
+        return response('You are not authorized for creating new posts', 403);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $foundPost = Post::findOrFail($id);
-        return view('post')->with(['posts' => [$foundPost]]);
+        return response('show post method', 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $foundPost = Post::findOrFail($id);
-        $allUsers = DB::table('users')->orderBy('email')->pluck('email', 'id');
-
-        return view('edit')->with(['post' => $foundPost, 'users' => $allUsers]);
+        return response('edit post method', 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        $postForUpdate = Post::findOrFail($id);
-        $postForUpdate->title = $request->title;
-        $postForUpdate->content = $request->content;
-        $postForUpdate->user_id = $request->user_id;
-
-        $postForUpdate->save();
-
-        return $this->show($id);
+        // 3. Authorizing Actions Using Policies VIA Controller Helpers
+        $this->authorize('update', $post);
+        return response("Updating post [id=$post->id]", 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Post $post)
     {
-        Post::destroy($id);
-        return $this->index();
+        if ($request->user()->can('delete', $post)) {
+            return response("Deleting post [id=$post->id]", 200);
+        }
+        return response('You are not author of this post -> you cannot delete it', 403);
     }
 }
